@@ -1,8 +1,13 @@
 import argparse
+from parts import yazi
 
 
 def main() -> None:
-    print(yazi_bulk_renamer(*args_ep()) if args_ep_check(*args_ep()) else "Try again.")
+    print(
+        yazi.yazi_bulk_renamer(*args_ep())
+        if args_ep_check(*args_ep())
+        else "Try again."
+    )
 
 
 def args_ep() -> tuple[int, int, str]:
@@ -20,24 +25,6 @@ def args_ep_check(start: int, end: int, type_ep: str) -> bool:
     if type_ep not in {"mp4", "mkv", "webm"}:
         return False
     return True
-
-
-def yazi_bulk_renamer(start: int, end: int, type_ep: str) -> str:
-    result: str = str()
-    checker: set = set()
-    for i in range(start, end + 1):
-        if i not in checker:
-            checker.add(i)
-            result += f"{i:02}.{type_ep}\n"
-            for j in list(
-                ep
-                for ep in range(i * 10, (i + 1) * 10)
-                if ep in set(range(start, end + 1))
-            ):
-                if j not in checker:
-                    checker.add(j)
-                    result += f"{j:02}.{type_ep}\n"
-    return result
 
 
 if __name__ == "__main__":
